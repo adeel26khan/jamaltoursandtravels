@@ -1,0 +1,9 @@
+{
+  "name": "jamaltoursandtravels",
+  "version": "1.0.0",
+  "description": "Jamal Tours & Travels - Premium Hajj & Umrah Tour Operator Web Application",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Deploying Prebuilt Flutter Web Bundle'"
+  }
+}
