@@ -13,6 +13,8 @@ class PackageModel {
   final int maxSeats;
   final int availableSeats;
   final List<String> images;
+  final List<String> inclusions;
+  final List<String> exclusions;
   final bool isActive;
   final DateTime createdAt;
 
@@ -31,6 +33,8 @@ class PackageModel {
     this.maxSeats = 50,
     this.availableSeats = 50,
     this.images = const [],
+    this.inclusions = const [],
+    this.exclusions = const [],
     this.isActive = true,
     DateTime? createdAt,
   }) : createdAt = createdAt ?? DateTime.now();
@@ -53,13 +57,11 @@ class PackageModel {
       badge: json['badge'] as String?,
       maxSeats: (json['max_seats'] as num?)?.toInt() ?? 50,
       availableSeats: (json['available_seats'] as num?)?.toInt() ?? 50,
-      images: json['images'] != null
-          ? List<String>.from(json['images'] as List)
-          : [],
+      images: json['images'] != null ? List<String>.from(json['images'] as List) : [],
+      inclusions: json['inclusions'] != null ? List<String>.from(json['inclusions'] as List) : [],
+      exclusions: json['exclusions'] != null ? List<String>.from(json['exclusions'] as List) : [],
       isActive: json['is_active'] as bool? ?? true,
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'] as String)
-          : DateTime.now(),
+      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : DateTime.now(),
     );
   }
 
@@ -78,6 +80,8 @@ class PackageModel {
       'max_seats': maxSeats,
       'available_seats': availableSeats,
       'images': images,
+      'inclusions': inclusions,
+      'exclusions': exclusions,
       'is_active': isActive,
     };
     if (includeId && id.length == 36 && !id.startsWith('pkg_')) {
@@ -102,6 +106,8 @@ class PackageModel {
       'max_seats': maxSeats,
       'available_seats': availableSeats,
       'images': images,
+      'inclusions': inclusions,
+      'exclusions': exclusions,
       'is_active': isActive,
       'created_at': createdAt.toIso8601String(),
     };

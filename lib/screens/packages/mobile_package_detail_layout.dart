@@ -145,18 +145,108 @@ class _MobilePackageDetailLayoutState extends ConsumerState<MobilePackageDetailL
                   // Hotels
                   const Text('HOTEL STAY', style: TextStyle(fontWeight: FontWeight.bold, color: AppConstants.deepGreen)),
                   const SizedBox(height: 10),
-                  _MobileHotelCard(
-                    city: 'Makkah Mukarramah',
-                    name: 'Swissôtel / Anjum Makkah (5★)',
-                    distance: '100m from Haram',
-                    nights: widget.package.makkahNights,
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final hotelsAsync = ref.watch(packageHotelsProvider(widget.package.id));
+                      return hotelsAsync.when(
+                        data: (map) {
+                          final makkah = map['makkah'];
+                          final madinah = map['madinah'];
+                          return Column(
+                            children: [
+                              _MobileHotelCard(
+                                city: 'Makkah Mukarramah',
+                                name: '${makkah?.name ?? "Swissôtel / Anjum Makkah"} (${makkah?.starRating ?? 5}★)',
+                                distance: makkah?.distanceFromHaram ?? '100m from Haram',
+                                nights: widget.package.makkahNights,
+                              ),
+                              const SizedBox(height: 10),
+                              _MobileHotelCard(
+                                city: 'Madinah Munawwarah',
+                                name: '${madinah?.name ?? "Pullman Zamzam Madinah"} (${madinah?.starRating ?? 5}★)',
+                                distance: madinah?.distanceFromHaram ?? '150m from Prophet\'s Mosque',
+                                nights: widget.package.madinahNights,
+                              ),
+                            ],
+                          );
+                        },
+                        loading: () => const CircularProgressIndicator(color: AppConstants.primaryGold),
+                        error: (_, __) => Column(
+                          children: [
+                            _MobileHotelCard(
+                              city: 'Makkah Mukarramah',
+                              name: 'Swissôtel / Anjum Makkah (5★)',
+                              distance: '100m from Haram',
+                              nights: widget.package.makkahNights,
+                            ),
+                            const SizedBox(height: 10),
+                            _MobileHotelCard(
+                              city: 'Madinah Munawwarah',
+                              name: 'Pullman Zamzam Madinah (5★)',
+                              distance: '150m from Prophet\'s Mosque',
+                              nights: widget.package.madinahNights,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
+                  const SizedBox(height: 24),
+
+                  // Inclusions & Exclusions
+                  const Text('INCLUSIONS & EXCLUSIONS', style: TextStyle(fontWeight: FontWeight.bold, color: AppConstants.deepGreen)),
                   const SizedBox(height: 10),
-                  _MobileHotelCard(
-                    city: 'Madinah Munawwarah',
-                    name: 'Pullman Zamzam Madinah (5★)',
-                    distance: '150m from Prophet\'s Mosque',
-                    nights: widget.package.madinahNights,
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: AppTheme.glassCardDecoration(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('INCLUSIONS', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppConstants.deepGreen)),
+                        const SizedBox(height: 8),
+                        ...(widget.package.inclusions.isNotEmpty
+                                ? widget.package.inclusions
+                                : [
+                                    'Return Direct Air Ticket',
+                                    'Umrah Visa & Health Insurance',
+                                    '5-Star Haram Facing Hotels',
+                                    'Daily Buffet Sehri & Iftar Meals',
+                                    'Guided Historical Ziyarat Tour',
+                                  ])
+                            .map((item) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.check_circle, size: 14, color: AppConstants.deepGreen),
+                                      const SizedBox(width: 8),
+                                      Expanded(child: Text(item, style: const TextStyle(fontSize: 12.5))),
+                                    ],
+                                  ),
+                                )),
+                        const SizedBox(height: 12),
+                        const Divider(),
+                        const SizedBox(height: 8),
+                        const Text('EXCLUSIONS', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.redAccent)),
+                        const SizedBox(height: 8),
+                        ...(widget.package.exclusions.isNotEmpty
+                                ? widget.package.exclusions
+                                : [
+                                    'Personal Shopping & Laundry',
+                                    'Excess Baggage Fees',
+                                    'Room Service Charges',
+                                  ])
+                            .map((item) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 6),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.cancel, size: 14, color: Colors.redAccent),
+                                      const SizedBox(width: 8),
+                                      Expanded(child: Text(item, style: const TextStyle(fontSize: 12.5))),
+                                    ],
+                                  ),
+                                )),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 24),
 

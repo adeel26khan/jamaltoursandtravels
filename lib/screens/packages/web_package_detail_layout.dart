@@ -396,6 +396,25 @@ class WebPackageDetailLayout extends ConsumerWidget {
   }
 
   Widget _buildInclusionsExclusions(BuildContext context) {
+    final inclusionsList = package.inclusions.isNotEmpty
+        ? package.inclusions
+        : const [
+            'Return Direct Air Ticket',
+            'Umrah Visa & Health Insurance',
+            '5-Star Haram Facing Hotels',
+            'Daily Buffet Sehri & Iftar Meals',
+            'Guided Historical Ziyarat in Makkah & Madinah',
+          ];
+
+    final exclusionsList = package.exclusions.isNotEmpty
+        ? package.exclusions
+        : const [
+            'Personal Shopping & Laundry',
+            'Excess Baggage Fees',
+            'Room Service & Extra Meals',
+            'Individual Taxi Charges',
+          ];
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -408,11 +427,7 @@ class WebPackageDetailLayout extends ConsumerWidget {
               children: [
                 const Text('INCLUSIONS', style: TextStyle(fontWeight: FontWeight.bold, color: AppConstants.deepGreen)),
                 const SizedBox(height: 12),
-                _CheckRow(text: 'Return Direct Air Ticket', isCheck: true),
-                _CheckRow(text: 'Umrah Visa & Health Insurance', isCheck: true),
-                _CheckRow(text: '5-Star Haram Facing Hotels', isCheck: true),
-                _CheckRow(text: 'Daily Buffet Sehri & Iftar Meals', isCheck: true),
-                _CheckRow(text: 'Guided Historical Ziyarat in Makkah & Madinah', isCheck: true),
+                ...inclusionsList.map((item) => _CheckRow(text: item, isCheck: true)),
               ],
             ),
           ),
@@ -427,10 +442,7 @@ class WebPackageDetailLayout extends ConsumerWidget {
               children: [
                 const Text('EXCLUSIONS', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.redAccent)),
                 const SizedBox(height: 12),
-                _CheckRow(text: 'Personal Shopping & Laundry', isCheck: false),
-                _CheckRow(text: 'Excess Baggage Fees', isCheck: false),
-                _CheckRow(text: 'Room Service & Extra Meals', isCheck: false),
-                _CheckRow(text: 'Individual Taxi Charges', isCheck: false),
+                ...exclusionsList.map((item) => _CheckRow(text: item, isCheck: false)),
               ],
             ),
           ),

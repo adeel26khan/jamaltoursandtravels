@@ -48,7 +48,7 @@ class AdminPackagesManager extends ConsumerWidget {
                         ),
                   ),
                   const SizedBox(height: 4),
-                  const Text('Create, update, and manage Hajj, Umrah, Hotels & Itineraries.'),
+                  const Text('Create, update, and manage Hajj, Umrah, Hotels, Inclusions & Itineraries.'),
                 ],
               ),
               ElevatedButton.icon(
@@ -117,7 +117,7 @@ class AdminPackagesManager extends ConsumerWidget {
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.edit, color: Colors.blue, size: 20),
-                                tooltip: 'Edit Package, Hotels & Itinerary',
+                                tooltip: 'Edit Package, Hotels & Inclusions',
                                 onPressed: () => _openPackageFormDialog(context, package: pkg),
                               ),
                               IconButton(
@@ -223,6 +223,8 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
   late TextEditingController seatsController;
   late TextEditingController badgeController;
   late TextEditingController descController;
+  late TextEditingController inclusionsController;
+  late TextEditingController exclusionsController;
 
   String selectedType = 'umrah';
   String? selectedMakkahHotelId;
@@ -246,6 +248,18 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
     badgeController = TextEditingController(text: p?.badge ?? '');
     descController = TextEditingController(text: p?.description ?? '');
     selectedType = p?.type ?? 'umrah';
+
+    inclusionsController = TextEditingController(
+      text: p?.inclusions.isNotEmpty == true
+          ? p!.inclusions.join(', ')
+          : 'Direct Flight Air Tickets, Umrah Visa & Medical Insurance, 5-Star Haram Facing Hotels, Sehri & Iftar All Meals, AC Buses & Scholars Ziyarat Guide',
+    );
+
+    exclusionsController = TextEditingController(
+      text: p?.exclusions.isNotEmpty == true
+          ? p!.exclusions.join(', ')
+          : 'Personal Shopping & Laundry, Room Service & Extra Meals, Excess Luggage Fees',
+    );
 
     _loadExistingPackageDetails();
   }
@@ -334,6 +348,8 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
     seatsController.dispose();
     badgeController.dispose();
     descController.dispose();
+    inclusionsController.dispose();
+    exclusionsController.dispose();
     for (final item in itineraryItems) {
       item.dispose();
     }
@@ -353,6 +369,18 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
     final isEdit = widget.package != null;
     final packageId = isEdit ? widget.package!.id : 'pkg_${DateTime.now().millisecondsSinceEpoch}';
 
+    final inclusionsList = inclusionsController.text
+        .split(',')
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
+
+    final exclusionsList = exclusionsController.text
+        .split(',')
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
+
     final pkgModel = PackageModel(
       id: packageId,
       title: titleController.text.trim(),
@@ -370,6 +398,8 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
       images: widget.package?.images.isNotEmpty == true
           ? widget.package!.images
           : ['https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80'],
+      inclusions: inclusionsList,
+      exclusions: exclusionsList,
     );
 
     String finalPackageId = packageId;
@@ -439,7 +469,7 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(isEdit ? 'Updated package details successfully!' : 'Created new package with Hotels & Itineraries!'),
+        content: Text(isEdit ? 'Updated package details & inclusions successfully!' : 'Created new package with Inclusions, Hotels & Itineraries!'),
         backgroundColor: AppConstants.deepGreen,
       ),
     );
@@ -457,14 +487,14 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
           Icon(isEdit ? Icons.edit : Icons.add_box, color: AppConstants.deepGreen),
           const SizedBox(width: 8),
           Text(
-            isEdit ? 'Edit Package, Hotels & Itinerary' : 'Add New Package Listing',
+            isEdit ? 'Edit Package, Hotels & Inclusions' : 'Add New Package Listing',
             style: const TextStyle(fontWeight: FontWeight.bold, color: AppConstants.deepGreen),
           ),
         ],
       ),
       content: SizedBox(
-        width: 700,
-        height: 600,
+        width: 720,
+        height: 620,
         child: isLoading
             ? const Center(child: CircularProgressIndicator(color: AppConstants.primaryGold))
             : SingleChildScrollView(
@@ -563,8 +593,30 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
                     ),
                     const SizedBox(height: 24),
 
-                    // SECTION 2: HOTEL ACCOMMODATION MAPPING
-                    _buildSectionHeader('2. ASSIGNED HOTELS (MAKKAH & MADINAH)'),
+                    // SECTION 2: INCLUSIONS & EXCLUSIONS
+                    _buildSectionHeader('2. INCLUSIONS & EXCLUSIONS CHECKLIST'),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: inclusionsController,
+                      maxLines: 2,
+                      decoration: const InputDecoration(
+                        labelText: 'Package Inclusions (Comma-separated)',
+                        hintText: 'Direct Flight Air Tickets, Umrah Visa, 5-Star Haram Hotels, Sehri & Iftar Meals',
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: exclusionsController,
+                      maxLines: 2,
+                      decoration: const InputDecoration(
+                        labelText: 'Package Exclusions (Comma-separated)',
+                        hintText: 'Personal Expenses, Room Service, Laundry, Excess Luggage',
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // SECTION 3: HOTEL ACCOMMODATION MAPPING
+                    _buildSectionHeader('3. ASSIGNED HOTELS (MAKKAH & MADINAH)'),
                     const SizedBox(height: 12),
                     hotelsAsync.when(
                       data: (hotels) {
@@ -602,11 +654,11 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
                     ),
                     const SizedBox(height: 24),
 
-                    // SECTION 3: DAY-BY-DAY ITINERARY BUILDER
+                    // SECTION 4: DAY-BY-DAY ITINERARY BUILDER
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _buildSectionHeader('3. DAY-BY-DAY ITINERARY BUILDER'),
+                        _buildSectionHeader('4. DAY-BY-DAY ITINERARY BUILDER'),
                         ElevatedButton.icon(
                           onPressed: () {
                             setState(() {
