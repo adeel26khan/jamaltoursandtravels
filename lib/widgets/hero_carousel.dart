@@ -23,19 +23,19 @@ class _HeroCarouselState extends State<HeroCarousel> {
     {
       'title': 'Blessed Ramzan & Hajj 2026 Pilgrimage',
       'subtitle': 'Experience pure spiritual devotion in Makkah Mukarramah & Madinah Munawwarah with 5-Star Haram facing hotels.',
-      'image': 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1600&q=80',
+      'image': 'https://images.pexels.com/photos/34956781/pexels-photo-34956781.jpeg',
       'arabic': 'لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ',
     },
     {
       'title': 'Peaceful Journeys to Masjid An-Nabawi',
       'subtitle': 'Walk in the footsteps of the Prophet ﷺ with dedicated scholars, direct flights, and full logistics support.',
-      'image': 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1600&q=80',
+      'image': 'https://images.pexels.com/photos/20277838/pexels-photo-20277838.jpeg',
       'arabic': 'مُحَمَّدٌ رَسُولُ اللَّهِ',
     },
     {
       'title': 'Trusted Hajj & Umrah Tour Operator',
       'subtitle': '10+ Years of Excellence serving pilgrims from Thane & Mumbai. Transparent pricing with zero hidden fees.',
-      'image': 'https://images.unsplash.com/photo-1542816417-0983cbe32277?auto=format&fit=crop&w=1600&q=80',
+      'image': 'https://images.pexels.com/photos/38385715/pexels-photo-38385715.jpeg',
       'arabic': 'وَأَتِمُّوا الْحَجَّ وَالْعُمْرَةَ لِلَّهِ',
     },
   ];
@@ -47,13 +47,18 @@ class _HeroCarouselState extends State<HeroCarousel> {
   }
 
   void _startAutoPlay() {
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
       if (_currentIndex < _slides.length - 1) {
         _currentIndex++;
       } else {
         _currentIndex = 0;
       }
-      if (_pageController.hasClients) {
+      if (_pageController.hasClients && mounted) {
         _pageController.animateToPage(
           _currentIndex,
           duration: const Duration(milliseconds: 700),
@@ -66,6 +71,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
   @override
   void dispose() {
     _timer?.cancel();
+    _timer = null;
     _pageController.dispose();
     super.dispose();
   }

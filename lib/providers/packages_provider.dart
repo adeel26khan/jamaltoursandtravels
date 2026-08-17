@@ -41,7 +41,7 @@ final packagesProvider = FutureProvider<List<PackageModel>>((ref) async {
       maxSeats: 50,
       availableSeats: 12,
       images: [
-        'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80',
         'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1000&q=80',
       ],
       createdAt: DateTime.now(),
@@ -224,7 +224,7 @@ final galleryProvider = FutureProvider<List<Map<String, String>>>((ref) async {
           'title': e['title'] as String? ?? 'Sacred Moment',
           'category': e['category'] as String? ?? 'general',
           'location': e['location'] as String? ?? 'Makkah',
-          'url': e['url'] as String? ?? 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1000&q=80',
+          'url': e['url'] as String? ?? 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80',
         }).toList();
       }
     } catch (_) {}
@@ -235,7 +235,7 @@ final galleryProvider = FutureProvider<List<Map<String, String>>>((ref) async {
       'title': 'Masjid Al-Haram & Holy Kaaba',
       'category': 'makkah',
       'location': 'Makkah Mukarramah',
-      'url': 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1000&q=80',
+      'url': 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80',
     },
     {
       'title': 'Al-Masjid an-Nabawi Green Dome',

@@ -38,7 +38,7 @@ class PackageCard extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: package.images.isNotEmpty
                         ? package.images.first
-                        : 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80',
+                        : 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=800&q=80',
                     fit: BoxFit.cover,
                     placeholder: (context, url) => Container(color: AppConstants.lightGray),
                     errorWidget: (context, url, err) => Container(

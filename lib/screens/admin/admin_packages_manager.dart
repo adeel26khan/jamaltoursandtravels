@@ -134,7 +134,7 @@ class AdminPackagesManager extends ConsumerWidget {
                       ? descController.text.trim()
                       : 'Comprehensive Hajj/Umrah package with 5-Star Haram hotel stay and scholar guidance.',
                   images: [
-                    'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80',
                   ],
                 );
 

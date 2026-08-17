@@ -249,7 +249,7 @@ CREATE POLICY "Admin update enquiries" ON public.enquiries FOR UPDATE USING (pub
 INSERT INTO public.hotels (id, name, city, star_rating, image, distance_from_haram) VALUES
 ('11111111-1111-1111-1111-111111111111', 'Swissôtel Makkah', 'Makkah', 5, 'https://images.unsplash.com/photo-1542816417-0983cbe32277?auto=format&fit=crop&w=800&q=80', '100m (Abraj Al Bait Clock Tower)'),
 ('22222222-2222-2222-2222-222222222222', 'Pullman Zamzam Madinah', 'Madinah', 5, 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=800&q=80', '150m from Masjid An-Nabawi'),
-('33333333-3333-3333-3333-333333333333', 'Anjum Hotel Makkah', 'Makkah', 5, 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80', '300m from Haram Piazza');
+('33333333-3333-3333-3333-333333333333', 'Anjum Hotel Makkah', 'Makkah', 5, 'https://images.unsplash.com/photo-1542816417-0983cbe32277?auto=format&fit=crop&w=800&q=80', '300m from Haram Piazza');
 
 -- Seed 5 Packages
 INSERT INTO public.packages (id, title, type, description, duration_days, makkah_nights, madinah_nights, price_inr, gst_rate, original_price_inr, badge, max_seats, available_seats, images, is_active) VALUES
@@ -267,7 +267,7 @@ INSERT INTO public.packages (id, title, type, description, duration_days, makkah
     'Most Popular',
     40,
     18,
-    ARRAY['https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1000&q=80', 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1000&q=80'],
+    ARRAY['https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80', 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1000&q=80'],
     TRUE
 ),
 (
@@ -362,7 +362,7 @@ INSERT INTO public.testimonials (name, city, rating, comment, avatar_url) VALUES
 
 -- Seed Gallery Photos
 INSERT INTO public.gallery (title, category, location, url) VALUES
-('Masjid Al-Haram & Holy Kaaba', 'makkah', 'Makkah Mukarramah', 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1000&q=80'),
+('Masjid Al-Haram & Holy Kaaba', 'makkah', 'Makkah Mukarramah', 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80'),
 ('Al-Masjid an-Nabawi Green Dome', 'madinah', 'Madinah Munawwarah', 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1000&q=80'),
 ('Pilgrims Performing Tawaf', 'makkah', 'Masjid Al-Haram', 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80'),
 ('Madinah Umbrella Courtyard', 'madinah', 'Madinah Munawwarah', 'https://images.unsplash.com/photo-1604881988758-f76ad2f7aac1?auto=format&fit=crop&w=1000&q=80'),

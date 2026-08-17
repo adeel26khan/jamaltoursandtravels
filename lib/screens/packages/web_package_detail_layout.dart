@@ -259,7 +259,7 @@ class WebPackageDetailLayout extends ConsumerWidget {
     final images = package.images.isNotEmpty
         ? package.images
         : [
-            'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1200&q=80',
             'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1200&q=80',
           ];
 

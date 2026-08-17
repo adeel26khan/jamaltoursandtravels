@@ -16,39 +16,49 @@ class _GallerySectionState extends ConsumerState<GallerySection> {
   String _selectedCategory = 'all';
 
   void _showImageLightbox(BuildContext context, Map<String, String> photo) {
+    final maxImageHeight = MediaQuery.of(context).size.height * 0.65;
     showDialog(
       context: context,
       builder: (context) => Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                icon: const Icon(Icons.close, color: Colors.white, size: 30),
-                onPressed: () => Navigator.pop(context),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white, size: 30),
+                  onPressed: () => Navigator.pop(context),
+                ),
               ),
-            ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: CachedNetworkImage(
-                imageUrl: photo['url']!,
-                fit: BoxFit.contain,
-                maxHeightDiskCache: 1200,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: maxImageHeight),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: CachedNetworkImage(
+                    imageUrl: photo['url']!,
+                    fit: BoxFit.contain,
+                    maxHeightDiskCache: 1200,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              photo['title']!,
-              style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              photo['location']!,
-              style: const TextStyle(color: AppConstants.primaryGold, fontSize: 14),
-            ),
-          ],
+              const SizedBox(height: 12),
+              Text(
+                photo['title']!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                photo['location']!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: AppConstants.primaryGold, fontSize: 14),
+              ),
+            ],
+          ),
         ),
       ),
     );

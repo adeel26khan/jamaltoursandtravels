@@ -17,7 +17,7 @@ final mockHotels = [
     city: 'Makkah',
     starRating: 5,
     distanceFromHaram: '50 Meters from Haram Gate',
-    image: 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1542816417-0983cbe32277?auto=format&fit=crop&w=800&q=80',
   ),
   HotelModel(
     id: 'hotel_3',
