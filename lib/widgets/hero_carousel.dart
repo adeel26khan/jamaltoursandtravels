@@ -35,7 +35,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
     {
       'title': 'Trusted Hajj & Umrah Tour Operator',
       'subtitle': '10+ Years of Excellence serving pilgrims from Thane & Mumbai. Transparent pricing with zero hidden fees.',
-      'image': 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1600&q=80',
+      'image': 'https://images.unsplash.com/photo-1542816417-0983cbe32277?auto=format&fit=crop&w=1600&q=80',
       'arabic': 'وَأَتِمُّوا الْحَجَّ وَالْعُمْرَةَ لِلَّهِ',
     },
   ];

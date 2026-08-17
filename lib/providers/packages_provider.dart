@@ -76,7 +76,7 @@ final packagesProvider = FutureProvider<List<PackageModel>>((ref) async {
       maxSeats: 30,
       availableSeats: 5,
       images: [
-        'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&w=1000&q=80',
       ],
       createdAt: DateTime.now(),
     ),
@@ -247,19 +247,19 @@ final galleryProvider = FutureProvider<List<Map<String, String>>>((ref) async {
       'title': 'Pilgrims Performing Tawaf',
       'category': 'makkah',
       'location': 'Masjid Al-Haram',
-      'url': 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80',
+      'url': 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80',
     },
     {
       'title': 'Sacred Madinah Courtyard',
       'category': 'madinah',
       'location': 'Madinah Munawwarah',
-      'url': 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1000&q=80',
+      'url': 'https://images.unsplash.com/photo-1604881988758-f76ad2f7aac1?auto=format&fit=crop&w=1000&q=80',
     },
     {
       'title': 'Grand Mosque Night View',
       'category': 'makkah',
       'location': 'Makkah Mukarramah',
-      'url': 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80',
+      'url': 'https://images.unsplash.com/photo-1542816417-0983cbe32277?auto=format&fit=crop&w=1000&q=80',
     },
     {
       'title': 'Masjid Nabawi Umbrellas',
