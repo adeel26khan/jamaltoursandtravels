@@ -9,7 +9,7 @@ final mockHotels = [
     city: 'Makkah',
     starRating: 5,
     distanceFromHaram: '0 Meters (Direct Clock Tower View)',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1542816417-0983cbe32277?auto=format&fit=crop&w=800&q=80',
   ),
   HotelModel(
     id: 'hotel_2',
@@ -17,7 +17,7 @@ final mockHotels = [
     city: 'Makkah',
     starRating: 5,
     distanceFromHaram: '50 Meters from Haram Gate',
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80',
   ),
   HotelModel(
     id: 'hotel_3',
@@ -25,7 +25,7 @@ final mockHotels = [
     city: 'Madinah',
     starRating: 5,
     distanceFromHaram: '0 Meters (Facing Prophet\'s Mosque Gate 25)',
-    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=800&q=80',
   ),
   HotelModel(
     id: 'hotel_4',
@@ -33,7 +33,7 @@ final mockHotels = [
     city: 'Madinah',
     starRating: 5,
     distanceFromHaram: '100 Meters from Masjid An-Nabawi',
-    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1604881988758-f76ad2f7aac1?auto=format&fit=crop&w=800&q=80',
   ),
 ];
 

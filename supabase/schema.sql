@@ -247,9 +247,9 @@ CREATE POLICY "Admin update enquiries" ON public.enquiries FOR UPDATE USING (pub
 
 -- Seed Hotels
 INSERT INTO public.hotels (id, name, city, star_rating, image, distance_from_haram) VALUES
-('11111111-1111-1111-1111-111111111111', 'Swissôtel Makkah', 'Makkah', 5, 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80', '100m (Abraj Al Bait Clock Tower)'),
-('22222222-2222-2222-2222-222222222222', 'Pullman Zamzam Madinah', 'Madinah', 5, 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80', '150m from Masjid An-Nabawi'),
-('33333333-3333-3333-3333-333333333333', 'Anjum Hotel Makkah', 'Makkah', 5, 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80', '300m from Haram Piazza');
+('11111111-1111-1111-1111-111111111111', 'Swissôtel Makkah', 'Makkah', 5, 'https://images.unsplash.com/photo-1542816417-0983cbe32277?auto=format&fit=crop&w=800&q=80', '100m (Abraj Al Bait Clock Tower)'),
+('22222222-2222-2222-2222-222222222222', 'Pullman Zamzam Madinah', 'Madinah', 5, 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=800&q=80', '150m from Masjid An-Nabawi'),
+('33333333-3333-3333-3333-333333333333', 'Anjum Hotel Makkah', 'Makkah', 5, 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80', '300m from Haram Piazza');
 
 -- Seed 5 Packages
 INSERT INTO public.packages (id, title, type, description, duration_days, makkah_nights, madinah_nights, price_inr, gst_rate, original_price_inr, badge, max_seats, available_seats, images, is_active) VALUES
@@ -301,7 +301,7 @@ INSERT INTO public.packages (id, title, type, description, duration_days, makkah
     'Spiritual Peak',
     35,
     12,
-    ARRAY['https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80'],
+    ARRAY['https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80'],
     TRUE
 ),
 (
@@ -318,7 +318,7 @@ INSERT INTO public.packages (id, title, type, description, duration_days, makkah
     'Fast Track',
     30,
     10,
-    ARRAY['https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1000&q=80'],
+    ARRAY['https://images.unsplash.com/photo-1604881988758-f76ad2f7aac1?auto=format&fit=crop&w=1000&q=80'],
     TRUE
 ),
 (
@@ -335,7 +335,7 @@ INSERT INTO public.packages (id, title, type, description, duration_days, makkah
     'Coming Soon',
     50,
     50,
-    ARRAY['https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80'],
+    ARRAY['https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&w=1000&q=80'],
     TRUE
 );
 
@@ -364,10 +364,10 @@ INSERT INTO public.testimonials (name, city, rating, comment, avatar_url) VALUES
 INSERT INTO public.gallery (title, category, location, url) VALUES
 ('Masjid Al-Haram & Holy Kaaba', 'makkah', 'Makkah Mukarramah', 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1000&q=80'),
 ('Al-Masjid an-Nabawi Green Dome', 'madinah', 'Madinah Munawwarah', 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1000&q=80'),
-('Pilgrims Performing Tawaf', 'makkah', 'Masjid Al-Haram', 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80'),
-('Sacred Mount Uhud', 'ziyarat', 'Madinah Munawwarah', 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1000&q=80'),
-('Masjid Al-Haram Night View', 'makkah', 'Abraj Al Bait Makkah', 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80'),
-('Masjid Nabawi Umbrellas', 'madinah', 'Madinah Munawwarah', 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1000&q=80');
+('Pilgrims Performing Tawaf', 'makkah', 'Masjid Al-Haram', 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?auto=format&fit=crop&w=1000&q=80'),
+('Madinah Umbrella Courtyard', 'madinah', 'Madinah Munawwarah', 'https://images.unsplash.com/photo-1604881988758-f76ad2f7aac1?auto=format&fit=crop&w=1000&q=80'),
+('Masjid Al-Haram Night View', 'makkah', 'Abraj Al Bait Makkah', 'https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&w=1000&q=80'),
+('Makkah Clock Tower & Skyline', 'makkah', 'Makkah Mukarramah', 'https://images.unsplash.com/photo-1542816417-0983cbe32277?auto=format&fit=crop&w=1000&q=80');
 
 -- Seed YouTube Videos
 INSERT INTO public.videos (title, youtube_url, video_id, category) VALUES
