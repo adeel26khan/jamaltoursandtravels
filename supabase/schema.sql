@@ -34,10 +34,15 @@ CREATE TABLE IF NOT EXISTS public.packages (
     max_seats INT NOT NULL DEFAULT 50,
     available_seats INT NOT NULL DEFAULT 50 CHECK (available_seats >= 0),
     images TEXT[] DEFAULT ARRAY[]::TEXT[],
+    inclusions TEXT[] DEFAULT ARRAY[]::TEXT[],
+    exclusions TEXT[] DEFAULT ARRAY[]::TEXT[],
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
+
+ALTER TABLE public.packages ADD COLUMN IF NOT EXISTS inclusions TEXT[] DEFAULT ARRAY[]::TEXT[];
+ALTER TABLE public.packages ADD COLUMN IF NOT EXISTS exclusions TEXT[] DEFAULT ARRAY[]::TEXT[];
 
 -- 3. PACKAGE ITINERARIES TABLE (Day-by-Day Timeline)
 CREATE TABLE IF NOT EXISTS public.package_itineraries (

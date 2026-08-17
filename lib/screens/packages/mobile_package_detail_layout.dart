@@ -171,7 +171,7 @@ class _MobilePackageDetailLayoutState extends ConsumerState<MobilePackageDetailL
                           );
                         },
                         loading: () => const CircularProgressIndicator(color: AppConstants.primaryGold),
-                        error: (_, __) => Column(
+                        error: (err, stack) => Column(
                           children: [
                             _MobileHotelCard(
                               city: 'Makkah Mukarramah',

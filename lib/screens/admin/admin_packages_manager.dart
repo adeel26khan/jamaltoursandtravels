@@ -78,6 +78,7 @@ class AdminPackagesManager extends ConsumerWidget {
                       DataColumn(label: Text('Category', style: TextStyle(fontWeight: FontWeight.bold))),
                       DataColumn(label: Text('Duration', style: TextStyle(fontWeight: FontWeight.bold))),
                       DataColumn(label: Text('Price (+ 5% GST)', style: TextStyle(fontWeight: FontWeight.bold))),
+                      DataColumn(label: Text('Inclusions Summary', style: TextStyle(fontWeight: FontWeight.bold))),
                       DataColumn(label: Text('Seats Left', style: TextStyle(fontWeight: FontWeight.bold))),
                       DataColumn(label: Text('Actions', style: TextStyle(fontWeight: FontWeight.bold))),
                     ],
@@ -85,7 +86,7 @@ class AdminPackagesManager extends ConsumerWidget {
                       return DataRow(cells: [
                         DataCell(
                           ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 220),
+                            constraints: const BoxConstraints(maxWidth: 200),
                             child: Text(
                               pkg.title,
                               maxLines: 2,
@@ -108,6 +109,19 @@ class AdminPackagesManager extends ConsumerWidget {
                                 ),
                               Text(currencyFormat.format(pkg.priceInr), style: const TextStyle(fontWeight: FontWeight.bold)),
                             ],
+                          ),
+                        ),
+                        DataCell(
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 180),
+                            child: Text(
+                              pkg.inclusions.isNotEmpty
+                                  ? pkg.inclusions.join(', ')
+                                  : 'Air Tickets, Visa, 5★ Hotels, Meals, Ziyarat',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 11, color: AppConstants.deepGreen, fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                         DataCell(Text('${pkg.availableSeats} Seats')),
