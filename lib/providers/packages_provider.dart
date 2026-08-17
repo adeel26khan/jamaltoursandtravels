@@ -114,6 +114,21 @@ final packageDetailProvider = FutureProvider.family<PackageModel?, String>((ref,
 });
 
 final packageItinerariesProvider = FutureProvider.family<List<PackageItineraryModel>, String>((ref, packageId) async {
+  final supabase = ref.watch(supabaseClientProvider);
+  if (supabase != null) {
+    try {
+      final response = await supabase
+          .from('package_itineraries')
+          .select('*')
+          .eq('package_id', packageId)
+          .order('day_number', ascending: true);
+
+      if ((response as List).isNotEmpty) {
+        return (response as List).map((json) => PackageItineraryModel.fromJson(json)).toList();
+      }
+    } catch (_) {}
+  }
+
   return [
     PackageItineraryModel(
       id: 'it1',
