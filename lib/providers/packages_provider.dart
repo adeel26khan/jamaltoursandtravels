@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/package_model.dart';
 import '../models/itinerary_model.dart';
+import '../models/hotel_model.dart';
 import '../models/testimonial_model.dart';
 import 'supabase_provider.dart';
 
@@ -163,6 +164,36 @@ final packageItinerariesProvider = FutureProvider.family<List<PackageItineraryMo
       description: 'Check out from Makkah and travel via Haramain High Speed Train or AC Coach to Madinah Munawwarah. Check into hotel near Al-Masjid an-Nabawi and present Salam at Rawdah Rasool (SAW).',
     ),
   ];
+});
+
+final packageHotelsProvider = FutureProvider.family<Map<String, HotelModel?>, String>((ref, packageId) async {
+  final supabase = ref.watch(supabaseClientProvider);
+  HotelModel? makkahHotel;
+  HotelModel? madinahHotel;
+
+  if (supabase != null) {
+    try {
+      final response = await supabase
+          .from('package_hotels')
+          .select('city_type, hotels(*)')
+          .eq('package_id', packageId);
+
+      for (final item in response as List) {
+        final cityType = item['city_type'] as String?;
+        final hotelJson = item['hotels'] as Map<String, dynamic>?;
+        if (hotelJson != null) {
+          final hotel = HotelModel.fromJson(hotelJson);
+          if (cityType == 'makkah') makkahHotel = hotel;
+          if (cityType == 'madinah') madinahHotel = hotel;
+        }
+      }
+    } catch (_) {}
+  }
+
+  return {
+    'makkah': makkahHotel,
+    'madinah': madinahHotel,
+  };
 });
 
 final testimonialsProvider = FutureProvider<List<TestimonialModel>>((ref) async {

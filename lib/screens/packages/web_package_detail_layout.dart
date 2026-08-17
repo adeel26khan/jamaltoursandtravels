@@ -103,7 +103,7 @@ class WebPackageDetailLayout extends ConsumerWidget {
                         // Hotel Stay Details (Makkah & Madinah)
                         _buildSectionHeader(context, 'HOTEL ACCOMMODATION'),
                         const SizedBox(height: 16),
-                        _buildHotelCards(context),
+                        _buildHotelCards(context, ref),
                         const SizedBox(height: 32),
 
                         // Day-by-day Itinerary Timeline
@@ -297,29 +297,62 @@ class WebPackageDetailLayout extends ConsumerWidget {
     );
   }
 
-  Widget _buildHotelCards(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _HotelItemCard(
-            city: 'MAKKAH MUKARRAMAH',
-            hotelName: 'Swissôtel Makkah / Anjum Hotel',
-            stars: 5,
-            distance: '100m from Haram Piazza',
-            nights: package.makkahNights,
+  Widget _buildHotelCards(BuildContext context, WidgetRef ref) {
+    final hotelsAsync = ref.watch(packageHotelsProvider(package.id));
+
+    return hotelsAsync.when(
+      data: (map) {
+        final makkahHotel = map['makkah'];
+        final madinahHotel = map['madinah'];
+
+        return Row(
+          children: [
+            Expanded(
+              child: _HotelItemCard(
+                city: 'MAKKAH MUKARRAMAH',
+                hotelName: makkahHotel?.name ?? 'Swissôtel Makkah / Anjum Hotel',
+                stars: makkahHotel?.starRating ?? 5,
+                distance: makkahHotel?.distanceFromHaram ?? '100m from Haram Piazza',
+                nights: package.makkahNights,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _HotelItemCard(
+                city: 'MADINAH MUNAWWARAH',
+                hotelName: madinahHotel?.name ?? 'Pullman Zamzam Madinah',
+                stars: madinahHotel?.starRating ?? 5,
+                distance: madinahHotel?.distanceFromHaram ?? '150m from Masjid An-Nabawi',
+                nights: package.madinahNights,
+              ),
+            ),
+          ],
+        );
+      },
+      loading: () => const CircularProgressIndicator(color: AppConstants.primaryGold),
+      error: (err, stack) => Row(
+        children: [
+          Expanded(
+            child: _HotelItemCard(
+              city: 'MAKKAH MUKARRAMAH',
+              hotelName: 'Swissôtel Makkah / Anjum Hotel',
+              stars: 5,
+              distance: '100m from Haram Piazza',
+              nights: package.makkahNights,
+            ),
           ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: _HotelItemCard(
-            city: 'MADINAH MUNAWWARAH',
-            hotelName: 'Pullman Zamzam Madinah',
-            stars: 5,
-            distance: '150m from Masjid An-Nabawi',
-            nights: package.madinahNights,
+          const SizedBox(width: 16),
+          Expanded(
+            child: _HotelItemCard(
+              city: 'MADINAH MUNAWWARAH',
+              hotelName: 'Pullman Zamzam Madinah',
+              stars: 5,
+              distance: '150m from Masjid An-Nabawi',
+              nights: package.madinahNights,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
