@@ -494,292 +494,340 @@ class _PackageFormDialogState extends ConsumerState<_PackageFormDialog> {
     final isEdit = widget.package != null;
     final hotelsAsync = ref.watch(hotelsProvider);
 
-    return AlertDialog(
-      backgroundColor: AppConstants.softCream,
-      title: Row(
-        children: [
-          Icon(isEdit ? Icons.edit : Icons.add_box, color: AppConstants.deepGreen),
-          const SizedBox(width: 8),
-          Text(
-            isEdit ? 'Edit Package, Hotels & Inclusions' : 'Add New Package Listing',
-            style: const TextStyle(fontWeight: FontWeight.bold, color: AppConstants.deepGreen),
-          ),
-        ],
-      ),
-      content: SizedBox(
-        width: 720,
-        height: 620,
-        child: isLoading
-            ? const Center(child: CircularProgressIndicator(color: AppConstants.primaryGold))
-            : SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return DefaultTabController(
+      length: 4,
+      child: AlertDialog(
+        backgroundColor: AppConstants.softCream,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(isEdit ? Icons.edit : Icons.add_box, color: AppConstants.deepGreen),
+                const SizedBox(width: 8),
+                Text(
+                  isEdit ? 'Edit Package, Inclusions & Details' : 'Add New Package Listing',
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: AppConstants.deepGreen),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            const TabBar(
+              labelColor: AppConstants.deepGreen,
+              unselectedLabelColor: Colors.grey,
+              indicatorColor: AppConstants.primaryGold,
+              indicatorWeight: 3,
+              tabs: [
+                Tab(icon: Icon(Icons.info_outline, size: 18), text: '1. Basic Info'),
+                Tab(icon: Icon(Icons.checklist, size: 18), text: '2. Inclusions'),
+                Tab(icon: Icon(Icons.hotel, size: 18), text: '3. Hotels'),
+                Tab(icon: Icon(Icons.calendar_month, size: 18), text: '4. Itinerary'),
+              ],
+            ),
+          ],
+        ),
+        content: SizedBox(
+          width: 760,
+          height: 520,
+          child: isLoading
+              ? const Center(child: CircularProgressIndicator(color: AppConstants.primaryGold))
+              : TabBarView(
                   children: [
-                    // SECTION 1: BASIC PACKAGE INFO
-                    _buildSectionHeader('1. BASIC PACKAGE INFORMATION'),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: titleController,
-                      decoration: const InputDecoration(labelText: 'Package Title *'),
-                    ),
-                    const SizedBox(height: 12),
-                    DropdownButtonFormField<String>(
-                      isExpanded: true,
-                      initialValue: selectedType,
-                      decoration: const InputDecoration(labelText: 'Category'),
-                      items: const [
-                        DropdownMenuItem(value: 'umrah', child: Text('Umrah Package')),
-                        DropdownMenuItem(value: 'hajj', child: Text('Hajj Package')),
-                        DropdownMenuItem(value: 'air_ticket', child: Text('Air Ticket Service')),
-                      ],
-                      onChanged: (val) => setState(() => selectedType = val ?? 'umrah'),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: priceController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(labelText: 'Selling Price (INR) *'),
+                    // TAB 1: BASIC INFO
+                    SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextField(
+                            controller: titleController,
+                            decoration: const InputDecoration(labelText: 'Package Title *'),
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: TextField(
-                            controller: originalPriceController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(labelText: 'Original Price (Discount Rate)'),
+                          const SizedBox(height: 12),
+                          DropdownButtonFormField<String>(
+                            isExpanded: true,
+                            initialValue: selectedType,
+                            decoration: const InputDecoration(labelText: 'Category'),
+                            items: const [
+                              DropdownMenuItem(value: 'umrah', child: Text('Umrah Package')),
+                              DropdownMenuItem(value: 'hajj', child: Text('Hajj Package')),
+                              DropdownMenuItem(value: 'air_ticket', child: Text('Air Ticket Service')),
+                            ],
+                            onChanged: (val) => setState(() => selectedType = val ?? 'umrah'),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: durationController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(labelText: 'Duration (Days)'),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: TextField(
-                            controller: seatsController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(labelText: 'Available Seats'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: makkahNightsController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(labelText: 'Makkah Nights'),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: TextField(
-                            controller: madinahNightsController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(labelText: 'Madinah Nights'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: badgeController,
-                      decoration: const InputDecoration(labelText: 'Badge (e.g., RAMZAN SPECIAL, VIP)'),
-                    ),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: descController,
-                      maxLines: 2,
-                      decoration: const InputDecoration(labelText: 'Package Description'),
-                    ),
-                    const SizedBox(height: 24),
-
-                    // SECTION 2: INCLUSIONS & EXCLUSIONS
-                    _buildSectionHeader('2. INCLUSIONS & EXCLUSIONS CHECKLIST'),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: inclusionsController,
-                      maxLines: 2,
-                      decoration: const InputDecoration(
-                        labelText: 'Package Inclusions (Comma-separated)',
-                        hintText: 'Direct Flight Air Tickets, Umrah Visa, 5-Star Haram Hotels, Sehri & Iftar Meals',
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: exclusionsController,
-                      maxLines: 2,
-                      decoration: const InputDecoration(
-                        labelText: 'Package Exclusions (Comma-separated)',
-                        hintText: 'Personal Expenses, Room Service, Laundry, Excess Luggage',
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-
-                    // SECTION 3: HOTEL ACCOMMODATION MAPPING
-                    _buildSectionHeader('3. ASSIGNED HOTELS (MAKKAH & MADINAH)'),
-                    const SizedBox(height: 12),
-                    hotelsAsync.when(
-                      data: (hotels) {
-                        final makkahHotels = hotels.where((h) => h.city.toLowerCase() == 'makkah').toList();
-                        final madinahHotels = hotels.where((h) => h.city.toLowerCase() == 'madinah').toList();
-
-                        return Column(
-                          children: [
-                            DropdownButtonFormField<String>(
-                              isExpanded: true,
-                              initialValue: selectedMakkahHotelId,
-                              decoration: const InputDecoration(labelText: 'Select Makkah Hotel'),
-                              items: [
-                                const DropdownMenuItem(value: null, child: Text('No Hotel Selected (Default Fallback)')),
-                                ...makkahHotels.map((h) => DropdownMenuItem(value: h.id, child: Text('${h.name} (${h.distanceFromHaram})'))),
-                              ],
-                              onChanged: (val) => setState(() => selectedMakkahHotelId = val),
-                            ),
-                            const SizedBox(height: 12),
-                            DropdownButtonFormField<String>(
-                              isExpanded: true,
-                              initialValue: selectedMadinahHotelId,
-                              decoration: const InputDecoration(labelText: 'Select Madinah Hotel'),
-                              items: [
-                                const DropdownMenuItem(value: null, child: Text('No Hotel Selected (Default Fallback)')),
-                                ...madinahHotels.map((h) => DropdownMenuItem(value: h.id, child: Text('${h.name} (${h.distanceFromHaram})'))),
-                              ],
-                              onChanged: (val) => setState(() => selectedMadinahHotelId = val),
-                            ),
-                          ],
-                        );
-                      },
-                      loading: () => const CircularProgressIndicator(color: AppConstants.primaryGold),
-                      error: (err, stack) => const Text('Could not load hotels list for mapping'),
-                    ),
-                    const SizedBox(height: 24),
-
-                    // SECTION 4: DAY-BY-DAY ITINERARY BUILDER
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildSectionHeader('4. DAY-BY-DAY ITINERARY BUILDER'),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            setState(() {
-                              itineraryItems.add(
-                                _EditableItineraryItem(
-                                  dayNumber: itineraryItems.length + 1,
-                                  city: 'Makkah',
-                                  title: '',
-                                  description: '',
-                                ),
-                              );
-                            });
-                          },
-                          icon: const Icon(Icons.add, size: 16),
-                          label: const Text('ADD DAY', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppConstants.primaryGold,
-                            foregroundColor: AppConstants.charcoal,
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: itineraryItems.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 12),
-                      itemBuilder: (context, index) {
-                        final item = itineraryItems[index];
-                        return Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: AppConstants.borderGold.withValues(alpha: 0.5)),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          const SizedBox(height: 12),
+                          Row(
                             children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 70,
-                                    child: TextField(
-                                      controller: item.dayNumberController,
-                                      keyboardType: TextInputType.number,
-                                      decoration: const InputDecoration(labelText: 'Day #'),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: DropdownButtonFormField<String>(
-                                      initialValue: item.city,
-                                      decoration: const InputDecoration(labelText: 'City'),
-                                      items: const [
-                                        DropdownMenuItem(value: 'Makkah', child: Text('Makkah')),
-                                        DropdownMenuItem(value: 'Madinah', child: Text('Madinah')),
-                                        DropdownMenuItem(value: 'Jeddah', child: Text('Jeddah')),
-                                        DropdownMenuItem(value: 'Transit', child: Text('Transit')),
-                                      ],
-                                      onChanged: (val) => setState(() => item.city = val ?? 'Makkah'),
-                                    ),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete, color: Colors.redAccent, size: 20),
-                                    onPressed: () {
-                                      setState(() {
-                                        item.dispose();
-                                        itineraryItems.removeAt(index);
-                                      });
-                                    },
-                                  ),
-                                ],
+                              Expanded(
+                                child: TextField(
+                                  controller: priceController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(labelText: 'Selling Price (INR) *'),
+                                ),
                               ),
-                              const SizedBox(height: 8),
-                              TextField(
-                                controller: item.titleController,
-                                decoration: const InputDecoration(labelText: 'Day Title (e.g. Arrival & Umrah)'),
-                              ),
-                              const SizedBox(height: 8),
-                              TextField(
-                                controller: item.descController,
-                                maxLines: 2,
-                                decoration: const InputDecoration(labelText: 'Activities & Description'),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: TextField(
+                                  controller: originalPriceController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(labelText: 'Original Price (Discount Rate)'),
+                                ),
                               ),
                             ],
                           ),
-                        );
-                      },
+                          const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: durationController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(labelText: 'Duration (Days)'),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: TextField(
+                                  controller: seatsController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(labelText: 'Available Seats'),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: makkahNightsController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(labelText: 'Makkah Nights'),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: TextField(
+                                  controller: madinahNightsController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(labelText: 'Madinah Nights'),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          TextField(
+                            controller: badgeController,
+                            decoration: const InputDecoration(labelText: 'Badge (e.g., RAMZAN SPECIAL, VIP)'),
+                          ),
+                          const SizedBox(height: 12),
+                          TextField(
+                            controller: descController,
+                            maxLines: 3,
+                            decoration: const InputDecoration(labelText: 'Package Description'),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // TAB 2: INCLUSIONS & EXCLUSIONS
+                    SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
+                          _buildSectionHeader('PACKAGE INCLUSIONS & EXCLUSIONS'),
+                          const SizedBox(height: 16),
+                          TextField(
+                            controller: inclusionsController,
+                            maxLines: 4,
+                            decoration: const InputDecoration(
+                              labelText: 'Package Inclusions (Comma-separated) *',
+                              hintText: 'Direct Flight Air Tickets, Umrah Visa & Medical Insurance, 5-Star Haram Facing Hotels, Sehri & Iftar Buffet Meals, AC Buses & Scholars Ziyarat Guide',
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            controller: exclusionsController,
+                            maxLines: 3,
+                            decoration: const InputDecoration(
+                              labelText: 'Package Exclusions (Comma-separated) *',
+                              hintText: 'Personal Shopping & Laundry, Room Service & Extra Meals, Excess Luggage Fees',
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          const Text(
+                            '💡 Note: Separate each inclusion or exclusion item with a comma. They will render as green checkmarks (inclusions) and red crosses (exclusions) on the detail page.',
+                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // TAB 3: HOTELS MAPPING
+                    SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
+                          _buildSectionHeader('ASSIGNED HOTELS (MAKKAH & MADINAH)'),
+                          const SizedBox(height: 16),
+                          hotelsAsync.when(
+                            data: (hotels) {
+                              final makkahHotels = hotels.where((h) => h.city.toLowerCase() == 'makkah').toList();
+                              final madinahHotels = hotels.where((h) => h.city.toLowerCase() == 'madinah').toList();
+
+                              return Column(
+                                children: [
+                                  DropdownButtonFormField<String>(
+                                    isExpanded: true,
+                                    initialValue: selectedMakkahHotelId,
+                                    decoration: const InputDecoration(labelText: 'Select Makkah Hotel'),
+                                    items: [
+                                      const DropdownMenuItem(value: null, child: Text('No Hotel Selected (Default Fallback)')),
+                                      ...makkahHotels.map((h) => DropdownMenuItem(value: h.id, child: Text('${h.name} (${h.distanceFromHaram})'))),
+                                    ],
+                                    onChanged: (val) => setState(() => selectedMakkahHotelId = val),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  DropdownButtonFormField<String>(
+                                    isExpanded: true,
+                                    initialValue: selectedMadinahHotelId,
+                                    decoration: const InputDecoration(labelText: 'Select Madinah Hotel'),
+                                    items: [
+                                      const DropdownMenuItem(value: null, child: Text('No Hotel Selected (Default Fallback)')),
+                                      ...madinahHotels.map((h) => DropdownMenuItem(value: h.id, child: Text('${h.name} (${h.distanceFromHaram})'))),
+                                    ],
+                                    onChanged: (val) => setState(() => selectedMadinahHotelId = val),
+                                  ),
+                                ],
+                              );
+                            },
+                            loading: () => const CircularProgressIndicator(color: AppConstants.primaryGold),
+                            error: (err, stack) => const Text('Could not load hotels list for mapping'),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // TAB 4: ITINERARY BUILDER
+                    SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _buildSectionHeader('DAY-BY-DAY ITINERARY BUILDER'),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  setState(() {
+                                    itineraryItems.add(
+                                      _EditableItineraryItem(
+                                        dayNumber: itineraryItems.length + 1,
+                                        city: 'Makkah',
+                                        title: '',
+                                        description: '',
+                                      ),
+                                    );
+                                  });
+                                },
+                                icon: const Icon(Icons.add, size: 16),
+                                label: const Text('ADD DAY', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppConstants.primaryGold,
+                                  foregroundColor: AppConstants.charcoal,
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: itineraryItems.length,
+                            separatorBuilder: (context, index) => const SizedBox(height: 12),
+                            itemBuilder: (context, index) {
+                              final item = itineraryItems[index];
+                              return Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: AppConstants.borderGold.withValues(alpha: 0.5)),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 70,
+                                          child: TextField(
+                                            controller: item.dayNumberController,
+                                            keyboardType: TextInputType.number,
+                                            decoration: const InputDecoration(labelText: 'Day #'),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: DropdownButtonFormField<String>(
+                                            initialValue: item.city,
+                                            decoration: const InputDecoration(labelText: 'City'),
+                                            items: const [
+                                              DropdownMenuItem(value: 'Makkah', child: Text('Makkah')),
+                                              DropdownMenuItem(value: 'Madinah', child: Text('Madinah')),
+                                              DropdownMenuItem(value: 'Jeddah', child: Text('Jeddah')),
+                                              DropdownMenuItem(value: 'Transit', child: Text('Transit')),
+                                            ],
+                                            onChanged: (val) => setState(() => item.city = val ?? 'Makkah'),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.delete, color: Colors.redAccent, size: 20),
+                                          onPressed: () {
+                                            setState(() {
+                                              item.dispose();
+                                              itineraryItems.removeAt(index);
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 8),
+                                    TextField(
+                                      controller: item.titleController,
+                                      decoration: const InputDecoration(labelText: 'Day Title (e.g. Arrival & Umrah)'),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    TextField(
+                                      controller: item.descController,
+                                      maxLines: 2,
+                                      decoration: const InputDecoration(labelText: 'Activities & Description'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-      ),
-      actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-        ElevatedButton(
-          onPressed: isSaving ? null : _saveAllPackageData,
-          style: ElevatedButton.styleFrom(backgroundColor: AppConstants.primaryGold, foregroundColor: AppConstants.charcoal),
-          child: isSaving
-              ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: AppConstants.charcoal))
-              : Text(isEdit ? 'UPDATE PACKAGE & DETAILS' : 'SAVE PACKAGE & DETAILS', style: const TextStyle(fontWeight: FontWeight.bold)),
         ),
-      ],
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          ElevatedButton(
+            onPressed: isSaving ? null : _saveAllPackageData,
+            style: ElevatedButton.styleFrom(backgroundColor: AppConstants.primaryGold, foregroundColor: AppConstants.charcoal),
+            child: isSaving
+                ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: AppConstants.charcoal))
+                : Text(isEdit ? 'UPDATE PACKAGE & DETAILS' : 'SAVE PACKAGE & DETAILS', style: const TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
     );
   }
 
