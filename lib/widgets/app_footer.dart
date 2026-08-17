@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../core/constants.dart';
 import '../core/theme.dart';
 import '../core/responsive_utils.dart';
+import 'app_logo.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
@@ -87,14 +88,7 @@ class AppFooter extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppConstants.primaryGold,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(Icons.mosque, color: AppConstants.deepGreen, size: 24),
-            ),
+            const AppLogo(size: 32, borderRadius: 8),
             const SizedBox(width: 12),
             Text(
               AppConstants.appName,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppConstants {
   static const String appName = 'Jamal Tours & Travels';
   static const String tagline = 'Your Sacred Journey, Our Trusted Promise';
+  static const String appLogo = 'assets/icons/app_logo.png';
   
   // Business Info
   static const String address = '1st Floor, School Road, Near NH School, Mira Road East, Thane, Maharashtra 401107';

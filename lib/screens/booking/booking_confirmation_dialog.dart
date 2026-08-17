@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../core/constants.dart';
 import '../../core/theme.dart';
+import '../../widgets/app_logo.dart';
 
 class BookingConfirmationDialog extends StatelessWidget {
   final String bookingId;
@@ -46,14 +47,7 @@ class BookingConfirmationDialog extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: AppConstants.primaryGold,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(Icons.mosque, color: AppConstants.deepGreen, size: 28),
-                    ),
+                    const AppLogo(size: 36, borderRadius: 8),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(

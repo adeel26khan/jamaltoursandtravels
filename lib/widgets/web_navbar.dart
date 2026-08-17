@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../core/constants.dart';
 import '../core/theme.dart';
 import '../providers/auth_provider.dart';
+import '../widgets/app_logo.dart';
 
 class WebNavbar extends ConsumerWidget implements PreferredSizeWidget {
   final String activeRoute;
@@ -40,18 +41,7 @@ class WebNavbar extends ConsumerWidget implements PreferredSizeWidget {
             onTap: () => context.go('/'),
             child: Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppConstants.primaryGold,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(
-                    Icons.mosque,
-                    color: AppConstants.deepGreen,
-                    size: 26,
-                  ),
-                ),
+                const AppLogo(),
                 const SizedBox(width: 12),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

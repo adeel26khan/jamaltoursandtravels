@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/constants.dart';
 import '../../providers/auth_provider.dart';
+import '../../widgets/app_logo.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -76,14 +77,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // Logo & Header
-                  Container(
-                    padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                      color: AppConstants.deepGreen,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(Icons.security, color: AppConstants.primaryGold, size: 36),
-                  ),
+                  const AppLogo(size: 48, borderRadius: 12),
                   const SizedBox(height: 16),
                   Text(
                     AppConstants.appName,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/constants.dart';
 import '../../core/theme.dart';
+import '../../widgets/app_logo.dart';
 
 class AdminSidebar extends StatelessWidget {
   final int selectedIndex;
@@ -25,14 +26,7 @@ class AdminSidebar extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             child: Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppConstants.primaryGold,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(Icons.security, color: AppConstants.deepGreen, size: 24),
-                ),
+                const AppLogo(size: 32, borderRadius: 8),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(

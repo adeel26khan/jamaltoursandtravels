@@ -13,6 +13,7 @@ import '../../widgets/gallery_section.dart';
 import '../../widgets/videos_section.dart';
 import '../../widgets/testimonials_section.dart';
 import '../../widgets/mobile_bottom_nav.dart';
+import '../../widgets/app_logo.dart';
 
 class MobileHomeLayout extends ConsumerWidget {
   const MobileHomeLayout({super.key});
@@ -29,14 +30,7 @@ class MobileHomeLayout extends ConsumerWidget {
         elevation: 2,
         title: Row(
           children: [
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: AppConstants.primaryGold,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: const Icon(Icons.mosque, color: AppConstants.deepGreen, size: 20),
-            ),
+            const AppLogo(size: 28, borderRadius: 6),
             const SizedBox(width: 10),
             Text(
               AppConstants.appName,
@@ -303,14 +297,7 @@ class MobileHomeLayout extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: AppConstants.primaryGold,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(Icons.mosque, color: AppConstants.deepGreen, size: 24),
-                    ),
+                    const AppLogo(size: 32, borderRadius: 8),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(

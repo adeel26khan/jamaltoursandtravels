@@ -6,6 +6,7 @@ import '../../core/constants.dart';
 import '../../core/theme.dart';
 import '../../core/responsive_utils.dart';
 import '../../providers/auth_provider.dart';
+import '../../widgets/app_logo.dart';
 
 class PhoneLoginScreen extends ConsumerStatefulWidget {
   const PhoneLoginScreen({super.key});
@@ -86,25 +87,7 @@ class _PhoneLoginScreenState extends ConsumerState<PhoneLoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // Crescent & Star Islamic Icon Accent
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppConstants.deepGreen,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppConstants.primaryGold.withValues(alpha: 0.3),
-                                blurRadius: 12,
-                                spreadRadius: 2,
-                              ),
-                            ],
-                          ),
-                          child: const Icon(
-                            Icons.mosque,
-                            size: 40,
-                            color: AppConstants.primaryGold,
-                          ),
-                        ).animate().scale(duration: 400.ms, curve: Curves.easeOut),
+                        const AppLogo(size: 56, borderRadius: 16).animate().scale(duration: 400.ms, curve: Curves.easeOut),
                         const SizedBox(height: 20),
 
                         // Title & Subtitle
